@@ -1,4 +1,4 @@
-# Phase 8 — Pre-delivery checklist
+# Phase 8: Pre-delivery checklist
 
 The final gate. Synthesizes the per-phase checks into a single boolean list. Synthesized from ui-ux-pro-max-skill's pre-delivery checklist plus impeccable's polish checklist.
 
@@ -100,7 +100,7 @@ After phases 1–7 complete, walk this list. Every item is a single yes/no. Any 
 ## Output format
 
 ```markdown
-## Phase 8 — Pre-delivery checklist
+## Phase 8: Pre-delivery checklist
 
 | Section | Status | Failed items |
 |---|---|---|
@@ -141,5 +141,5 @@ This makes the next run aware. The gate doesn't keep re-flagging things the user
 
 - **Treating the checklist as a suggestion.** Each item ties back to a specific phase finding. They're not aspirational.
 - **Auto-checking items the gate didn't verify.** If phase 5 didn't actually compute the contrast ratio, don't check the contrast item. Be honest about what was and wasn't measured.
-- **Skipping the "used end-to-end in a browser" item.** This is the highest-leverage check on the list. A feature can compile, type-check, test, and lint, and still be broken in ways only a real browser session catches.
+- **Skipping the "used end-to-end in a browser" item.** This is the check teams skip most often, and it catches what compilers and tests can't. A feature can compile, type-check, test, and lint, and still be broken in ways only a real browser session catches.
 - **Using --override as a default.** If the team finds itself overriding every run, the checklist is too strict for the project, or the project's bar is too low. Talk about it; don't normalize the override.

@@ -17,7 +17,7 @@ Runs in eight phases against the diff (or a named target). Every finding gets a 
 | 3 | Reasoning | ui-ux-pro-max-skill | Pattern/color/type mismatch with industry register |
 | 4 | Design laws | impeccable shared laws + bans | Any absolute ban present, failed AI slop test |
 | 5 | A11y & performance | impeccable audit + WCAG/CWV | WCAG AA contrast or focus failure, layout thrash |
-| 6 | Hardening | impeccable harden | Unbounded text, missing error/empty/loading state |
+| 6 | Harden | impeccable harden | Unbounded text, missing error/empty/loading state |
 | 7 | Streamline | impeccable polish + distill | Drift unaccounted for, dead code, hard-coded tokens |
 | 8 | Pre-delivery checklist | ui-ux-pro-max + synthesis | Any unchecked item |
 
