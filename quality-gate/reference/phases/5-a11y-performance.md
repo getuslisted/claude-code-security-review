@@ -1,4 +1,4 @@
-# Phase 5 — Accessibility & performance
+# Phase 5: Accessibility & performance
 
 WCAG AA compliance, Core Web Vitals, and responsive behavior. Synthesized from impeccable's audit dimensions plus the WCAG and CWV standards directly. This phase is largely measurable; subjective judgment lives in phases 3 and 4.
 
@@ -158,11 +158,11 @@ The standard breakpoints to test against: 375px, 768px, 1024px, 1440px.
 ## Output format
 
 ```markdown
-## Phase 5 — Accessibility & performance
+## Phase 5: Accessibility & performance
 
 | Sub-check | Score | Worst finding |
 |---|---|---|
-| 5.1 Contrast | <0-4> | <or "—"> |
+| 5.1 Contrast | <0-4> | <or "none"> |
 | 5.2 Keyboard path | <0-4> | |
 | 5.3 ARIA & semantic | <0-4> | |
 | 5.4 Performance | <0-4> | |
