@@ -86,7 +86,7 @@ Full rubric: [reference/severity-and-confidence.md](reference/severity-and-confi
 A single markdown report. Structured to be skimmable in 30 seconds and actionable in 5 minutes.
 
 ```markdown
-# Quality Gate Report — <target> @ <sha>
+# Quality Gate Report: <target> @ <sha>
 
 ## Verdict
 **SHIP** | **BLOCK** (reason)
@@ -94,22 +94,22 @@ A single markdown report. Structured to be skimmable in 30 seconds and actionabl
 ## Health Score
 | Phase | Score | Worst finding |
 |---|---|---|
-| 2 Security | 4/4 | — |
+| 2 Security | 4/4 | (none) |
 | 3 Reasoning | 3/4 | Color palette is the category-reflex (`category: SaaS → purple gradient`) |
 | 4 Design laws | 2/4 | Side-stripe border on `<Alert>` (P1, conf 10) |
 | 5 A11y & perf | 3/4 | Focus indicator removed on `.btn-primary` (P1, conf 10) |
 | 6 Harden | 3/4 | No empty state for `<ProjectList>` (P1, conf 9) |
-| 7 Streamline | 4/4 | — |
+| 7 Streamline | 4/4 | (none) |
 | 8 Checklist | 6/8 | 2 items unchecked |
 | **Total** | **25/32** | |
 
 ## Blocking findings (P0/P1)
-1. **[P1, conf 10] Absolute ban: side-stripe border** — `components/Alert.tsx:18`
+1. **[P1, conf 10] Absolute ban: side-stripe border** at `components/Alert.tsx:18`
    - Evidence: `border-left: 4px solid var(--color-warning)`
    - Why: One of impeccable's six absolute bans. The colored side-stripe is the most recognizable AI-dashboard tell.
    - Fix: Replace with full 1px border + tinted background, or a leading icon + heading.
 
-2. **[P1, conf 10] WCAG AA: focus removed without replacement** — `components/Button.tsx:42`
+2. **[P1, conf 10] WCAG AA: focus removed without replacement** at `components/Button.tsx:42`
    - Evidence: `outline: none` with no `:focus-visible` style.
    - Fix: Add `:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }`.
 
