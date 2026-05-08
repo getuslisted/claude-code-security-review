@@ -1,6 +1,6 @@
 # Anti-patterns catalog
 
-Consolidated catalog of every anti-pattern the gate detects. Pulled from impeccable's 27 deterministic + 12 LLM rules, ui-ux-pro-max-skill's industry exclusions, and the security review's hard-exclusion list (inverted — what *not* to flag).
+Consolidated catalog of every anti-pattern the gate detects. Pulled from impeccable's 27 deterministic + 12 LLM rules, ui-ux-pro-max-skill's industry exclusions, and the security review's hard-exclusion list (inverted, what *not* to flag).
 
 Each entry has:
 - **ID**: stable identifier for cross-referencing
@@ -12,130 +12,130 @@ Each entry has:
 
 ## Visual / design tells
 
-### `side-stripe-border` — P1
+### `side-stripe-border` (P1)
 - **Source**: impeccable
 - **Detect**: `border-(left|right|inline-start|inline-end): \d+px` where `\d+ ≥ 2`, with a non-neutral color
 - **Why**: The single most recognizable AI-dashboard tell. Applied as a "category accent" on cards, alerts, callouts, list items.
 - **Fix**: Full 1px border + tinted background; or leading icon + heading; or top/bottom 1px accent.
 
-### `gradient-text` — P1
+### `gradient-text` (P1)
 - **Source**: impeccable
 - **Detect**: `background-clip: text` (or `-webkit-background-clip: text`) with a `linear-gradient` or `radial-gradient` background and `color: transparent`
 - **Why**: Decorative, never meaningful. Decision-avoidance: writer didn't pick a single color.
 - **Fix**: A single solid color. Emphasis via weight or size.
 
-### `glassmorphism-default` — P1
+### `glassmorphism-default` (P1)
 - **Source**: impeccable
 - **Detect**: `backdrop-filter: blur(\d+px)` combined with `background: rgba(...,< 0.3)` on a card or panel, appearing on more than one surface in the diff or without specific justification
 - **Why**: Used decoratively, not purposefully. Reads as 2020-era SaaS.
 - **Fix**: Solid surface + hairline border. If depth needed, low-alpha shadow.
 
-### `hero-metric-template` — P1
+### `hero-metric-template` (P1)
 - **Source**: impeccable
 - **Detect**: A grid or flex container with 3–4 cells, each containing a large number element (≥ 48px) followed by a small label element (≤ 16px), often with colored accents
 - **Why**: SaaS cliché. Dashboards aren't pages of stats; they're pages of *answers*.
-- **Fix**: Embed metrics in sentences. Use one hero KPI with context. Use a chart that shows the metric in motion.
+- **Fix**: Embed metrics in sentences ("3,142 errors this week, up 12% from last."). Use one hero KPI with context. Use a chart that shows the metric in motion.
 
-### `identical-card-grid` — P1
+### `identical-card-grid` (P1)
 - **Source**: impeccable
 - **Detect**: A `grid` or `flex` container with 3+ direct children matching the same structure: icon element + heading element + paragraph element, identical sizes
 - **Why**: The "feature grid" pattern. Reads as template-filled.
 - **Fix**: Vary card sizes (bento). Replace some with sentences in flow. Use a list with leading numbers. Pull strongest into a hero.
 
-### `modal-as-first-thought` — P1
+### `modal-as-first-thought` (P1)
 - **Source**: impeccable
 - **Detect**: New modal added in the diff
 - **Conditional finding**: Only flag if an inline alternative exists (accordion, side panel, separate route, popover-with-confirm)
 - **Why**: Modals are usually laziness. They trap focus, they obscure the surrounding context, they require dismiss management.
 - **Fix**: The named alternative. Modals reserved for genuinely modal moments (destructive confirm, blocking auth, error preventing continuation).
 
-### `nested-cards` — P1
+### `nested-cards` (P1)
 - **Source**: impeccable
 - **Detect**: A card-styled element (background + radius + padding + border or shadow) inside another card-styled element
 - **Why**: Visual noise. The hierarchy isn't doing work; the redundancy is.
 - **Fix**: Flatten. The outer card is a section; the inner is a row. They don't both need card styling.
 
-### `icon-tile-stack` — P2
+### `icon-tile-stack` (P2)
 - **Source**: impeccable
 - **Detect**: Rounded-square colored tile (typically 32–48px, `border-radius: 8–12px`, accent background) above an `<h2>` or `<h3>` heading. Pattern repeats across the page.
 - **Why**: Specific AI-marketing-page tell. The icon adds nothing; the heading carries the meaning.
 - **Fix**: Skip the tile. Or use the icon at a smaller size, inline with the heading.
 
-### `flat-type-hierarchy` — P2
+### `flat-type-hierarchy` (P2)
 - **Source**: impeccable
 - **Detect**: Heading scale ratios under 1.2 between adjacent levels (e.g. h1 = 32px, h2 = 28px, h3 = 24px)
 - **Why**: Weak hierarchy. The eye can't distinguish levels at a glance.
 - **Fix**: Ratios ≥ 1.25, ideally 1.333 or 1.5 between display and body.
 
-### `inter-only` — P2
+### `inter-only` (P2)
 - **Source**: impeccable
 - **Detect**: Inter (or system-ui-only) for both display and body type, no second voice
 - **Why**: Inter is the most-trained default. Shipping it everywhere makes the surface look like every other AI-generated UI.
 - **Fix**: Pair Inter with a display face that has voice (transitional serif, geometric grotesque, mono variable).
 
-### `bouncy-easing` — P2
+### `bouncy-easing` (P2)
 - **Source**: impeccable
-- **Detect**: Cubic-bezier with overshoot, `ease-in-out` with overshoot, named `cubic-bezier(.68,-.55,.27,1.55)`
+- **Detect**: Cubic-bezier with overshoot (`cubic-bezier(*,*-,*,*+)` patterns), `ease-in-out` with overshoot, named `cubic-bezier(.68,-.55,.27,1.55)`
 - **Why**: Real objects decelerate smoothly. Bounce/elastic feels dated.
 - **Fix**: Expo-out (`cubic-bezier(0.16, 1, 0.3, 1)`) or quart/quint variants.
 
-### `ai-purple-blue-gradient` — P2
+### `ai-purple-blue-gradient` (P2)
 - **Source**: ui-ux-pro-max-skill (industry-anti-pattern)
-- **Detect**: Linear gradient from saturated purple (`#7c3aed`, oklch hue ~280–300) to saturated blue (`#3b82f6`, oklch hue ~240–260), particularly on AI products, hero sections, or CTAs
+- **Detect**: Linear gradient from a saturated purple (`#7c3aed`, `#8b5cf6`, oklch hue ~280–300) to a saturated blue (`#3b82f6`, oklch hue ~240–260), particularly on AI products, hero sections, or CTAs
 - **Why**: The single most-trained AI-product reflex.
 - **Fix**: A single committed color, or a different palette entirely. The category-reflex check (phase 3) catches this.
 
-### `pure-black-white` — P1
+### `pure-black-white` (P1)
 - **Source**: impeccable
 - **Detect**: `#000`, `#fff`, `rgb(0,0,0)`, `rgb(255,255,255)`, `black`, `white` literal values
 - **Why**: Both read as cold and untinted. Real ink isn't pure black; real paper isn't pure white.
-- **Fix**: Tinted neutrals — chroma 0.005–0.01 toward the brand hue. `oklch(15% 0.005 270)` instead of `#000`.
+- **Fix**: Tinted neutrals, chroma 0.005–0.01 toward the brand hue. `oklch(15% 0.005 270)` instead of `#000`.
 
-### `gray-on-color` — P1
+### `gray-on-color` (P1)
 - **Source**: impeccable
 - **Detect**: A neutral gray text color on a colored (chroma > 0.05) background
 - **Why**: Reads as washed-out, broken contrast tunnel.
-- **Fix**: Use a darker tone of the bg color, or a transparent overlay.
+- **Fix**: Use a darker tone of the bg color, or a transparent overlay (`oklch(from var(--bg) calc(l - 0.4) c h)`).
 
-### `wave-divider` — P3
+### `wave-divider` (P3)
 - **Source**: impeccable (LLM rule)
 - **Detect**: SVG between sections with a sinusoidal or curved path
 - **Why**: 2018 marketing-page cliché.
-- **Fix**: A 1px hairline rule, or no divider at all.
+- **Fix**: A 1px hairline rule, or no divider at all (let whitespace do the work).
 
-### `universal-radius-12` — P3
+### `universal-radius-12` (P3)
 - **Source**: impeccable (LLM rule)
 - **Detect**: Every interactive surface uses `border-radius: 12px` (or any single value across all elements)
-- **Why**: Radius should be a controlled vocabulary, not a single value.
+- **Why**: Radius should be a controlled vocabulary (chips 4px, cards 8px, feature blocks 12px, hero 16–24px), not a single value.
 - **Fix**: Establish a radius scale, apply per element weight.
 
-### `every-section-divided-with-rule-line` — P3
+### `every-section-divided-with-rule-line` (P3)
 - **Source**: impeccable (LLM rule)
 - **Detect**: A `<hr>`-style rule between every section
-- **Why**: Whitespace already separates sections.
-- **Fix**: Trust whitespace.
+- **Why**: Whitespace already separates sections. Adding rules adds noise.
+- **Fix**: Trust whitespace. Use rules sparingly for genuine vertical divisions.
 
 ## Layout / structure tells
 
-### `card-everywhere` — P2
+### `card-everywhere` (P2)
 - **Source**: impeccable
 - **Detect**: 80%+ of content blocks are wrapped in a card-styled element
-- **Why**: Cards are the lazy answer.
-- **Fix**: Use cards only when content genuinely is a discrete object. Let prose flow.
+- **Why**: Cards are the lazy answer. They turn every piece of content into a "thing" when most things should flow with the page.
+- **Fix**: Use cards only when the content genuinely is a discrete object (a row, a panel, a notification). Let prose flow.
 
-### `centered-narrow-everything` — P3
+### `centered-narrow-everything` (P3)
 - **Source**: impeccable (LLM rule)
 - **Detect**: Every section uses `max-width: 768–960px` and `margin: 0 auto`
-- **Why**: Reads as documentation site, not a product or brand site.
-- **Fix**: Vary the layout per section.
+- **Why**: Reads as documentation site, not a product or brand site. Misses opportunities for asymmetric or full-width layouts.
+- **Fix**: Vary the layout per section. Hero can be full-bleed; feature explanations can be asymmetric two-column; long-form can be narrow.
 
-### `single-spacing-token` — P2
+### `single-spacing-token` (P2)
 - **Source**: impeccable
-- **Detect**: One spacing value used for nearly every gap on the page
-- **Why**: Monotonous rhythm.
+- **Detect**: One spacing value (e.g. `gap: 16px`, `padding: 16px`) used for nearly every gap on the page
+- **Why**: Monotonous rhythm. The eye expects variation.
 - **Fix**: A spacing scale (8/16/24/32/48/80/120). Use them differently per visual weight.
 
-### `wrapped-single-child` — P3
+### `wrapped-single-child` (P3)
 - **Source**: impeccable (LLM rule)
 - **Detect**: A `<div>` or `<section>` with one child, no styling beyond layout
 - **Why**: Adds DOM nodes for nothing.
@@ -143,142 +143,142 @@ Each entry has:
 
 ## Motion / interaction tells
 
-### `layout-property-animation` — P1
+### `layout-property-animation` (P1)
 - **Source**: impeccable
 - **Detect**: `transition-property` or `@keyframes` targeting `width`, `height`, `padding`, `margin`, `top`, `left`, `right`, `bottom`
-- **Why**: Triggers layout on every frame.
-- **Fix**: `transform` and `opacity` instead.
+- **Why**: Triggers layout on every frame; janky on cheap hardware. Real animation lives in `transform` and `opacity`.
+- **Fix**: `transform: scale()` / `translate()` for movement, `opacity` for appearance, `clip-path` for reveals.
 
-### `motion-without-reduced-motion-fallback` — P1
+### `motion-without-reduced-motion-fallback` (P1)
 - **Source**: impeccable
 - **Detect**: Animation or transition without a `@media (prefers-reduced-motion: reduce)` rule
-- **Why**: A11y baseline.
-- **Fix**: Wrap motion in the media query.
+- **Why**: A11y baseline. Users with vestibular disorders rely on this.
+- **Fix**: Wrap motion in the media query, set `animation-duration: 0.01ms` and `transition-duration: 0.01ms` for `reduce`.
 
-### `hover-only-affordance` — P1
+### `hover-only-affordance` (P1)
 - **Source**: impeccable
 - **Detect**: An interactive surface whose interactive nature is signaled only by hover
 - **Why**: Touch users don't hover. Keyboard users don't hover.
-- **Fix**: Interactive elements look interactive at rest.
+- **Fix**: Interactive elements look interactive at rest (cursor, weight, color, border).
 
 ## Copy / content tells
 
-### `em-dash` — P1
+### `em-dash` (P1)
 - **Source**: impeccable STYLE.md
 - **Detect**: `—`, `&mdash;`, `&#8212;`, `&#x2014;` in user-facing copy
-- **Why**: Decision-avoidance punctuation.
-- **Fix**: Comma, colon, semicolon, period, parentheses.
+- **Why**: Decision-avoidance punctuation. Writer didn't pick the relationship between clauses.
+- **Fix**: Comma, colon, semicolon, period, parentheses. Pick the relationship.
 
-### `double-hyphen-em-dash-substitute` — P1
+### `double-hyphen-em-dash-substitute` (P1)
 - **Source**: impeccable STYLE.md
-- **Detect**: ` -- ` in user-facing copy
-- **Why**: Worse than the em dash.
+- **Detect**: ` -- ` (space-hyphen-hyphen-space) in user-facing copy
+- **Why**: Worse than the em dash. Signals failed cleanup.
 - **Fix**: Real punctuation.
 
-### `banned-diction` — P1
+### `banned-diction` (P1)
 - **Source**: impeccable STYLE.md
 - **Detect**: `load-bearing`, `highest-leverage`, `biggest unlock`, `seamless`, `seamlessly`, `robust`, `robustness`, `delve`, `delves`, `delving`, `elevate`, `empower`, `underscore`, `pivotal`, `tapestry`, `data-driven`, `reflex defaults`, `collapses into monoculture`, `in today's`, `gone are the days`, `whether you're`, `let's dive in`, `in summary`, `in conclusion`, `moreover`, `furthermore`
 - **Why**: Each is in the upstream STYLE.md denylist with a rationale.
-- **Fix**: See [STYLE.md in the impeccable repo](https://github.com/getuslisted/impeccable/blob/main/STYLE.md) for per-term replacements.
+- **Fix**: See [STYLE.md in the impeccable repo](https://github.com/getuslisted/impeccable/blob/main/STYLE.md) for the per-term replacement.
 
-### `restated-heading` — P2
+### `restated-heading` (P2)
 - **Source**: impeccable STYLE.md
 - **Detect**: First sentence of body copy paraphrases the heading directly above it
-- **Why**: The heading already said it.
-- **Fix**: Open with the strongest specific claim.
+- **Why**: The heading already said it. The first sentence should advance.
+- **Fix**: Open with the strongest specific claim, the reader's wrong belief, or an example.
 
-### `triadic-everything` — P3
+### `triadic-everything` (P3)
 - **Source**: impeccable STYLE.md
-- **Detect**: Lists of exactly three items, adjective groups of three
+- **Detect**: Lists of exactly three items, adjective groups of three (`fast, simple, and powerful`), three-feature card grids
 - **Why**: Triads are the AI default rhythm.
-- **Fix**: Vary count.
+- **Fix**: Vary count. Use 2 or 4. Use 1.
 
-### `placeholder-as-label` — P0
-- **Source**: a11y standards
+### `placeholder-as-label` (P0)
+- **Source**: a11y standards (referenced in impeccable audit, ui-ux-pro-max checklist)
 - **Detect**: `<input>` with `placeholder` and no `<label>` or `aria-label`
-- **Why**: Placeholder disappears on focus.
-- **Fix**: Visible label above the input.
+- **Why**: Placeholder disappears on focus; user has no reference for what the field expects. Screen readers don't announce placeholders consistently.
+- **Fix**: Visible label above the input. Placeholder for example/format only, never as the label.
 
-### `error-message-too-generic` — P1
+### `error-message-too-generic` (P1)
 - **Source**: impeccable harden
 - **Detect**: User-facing error text matching `/^(error|something went wrong|please try again|invalid input)\.?$/i`
-- **Why**: User can't act on it.
-- **Fix**: Specific failure + recovery path.
+- **Why**: The user can't act on it. They don't know what failed or what to do.
+- **Fix**: Specific failure + recovery path. "Couldn't reach the server. Check your connection and retry."
 
 ## Accessibility tells
 
-### `outline-none-no-replacement` — P0
-- **Source**: WCAG
+### `outline-none-no-replacement` (P0)
+- **Source**: WCAG (referenced in impeccable + ui-ux-pro-max)
 - **Detect**: `outline: none` or `outline: 0` without a `:focus-visible` style providing equivalent indication
-- **Why**: WCAG 2.4.7 failure.
+- **Why**: Removes the only visible focus path for keyboard users. WCAG 2.4.7 failure.
 - **Fix**: `:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }`.
 
-### `tabindex-positive` — P1
+### `tabindex-positive` (P1)
 - **Source**: WCAG
-- **Detect**: `tabindex="1"`, `tabindex="2"`, etc.
-- **Why**: Creates a confusing tab order.
-- **Fix**: Use the natural DOM order.
+- **Detect**: `tabindex="1"`, `tabindex="2"`, etc. (any positive value)
+- **Why**: Creates a confusing tab order that fights the natural DOM order.
+- **Fix**: Use the natural DOM order. `tabindex="0"` to make a non-focusable element focusable; `tabindex="-1"` to allow programmatic focus only; never positive values.
 
-### `div-button` — P1
+### `div-button` (P1)
 - **Source**: WCAG
 - **Detect**: `<div>` or `<span>` with `onClick` and no `role="button"`, `tabindex`, or key handlers
-- **Why**: Not focusable, not keyboard-operable, not announced.
-- **Fix**: Use `<button>`.
+- **Why**: Not focusable, not keyboard-operable, not announced by screen readers.
+- **Fix**: Use `<button>`. If the visual styling is the issue, style the button: `appearance: none; background: none; border: 0; padding: 0;`.
 
-### `image-no-alt` — P1
+### `image-no-alt` (P1)
 - **Source**: WCAG
 - **Detect**: `<img>` without `alt` attribute
-- **Why**: WCAG 1.1.1.
-- **Fix**: Meaningful alt for content; `alt=""` for decorative.
+- **Why**: Required by WCAG 1.1.1.
+- **Fix**: Meaningful alt for content images, `alt=""` for decorative.
 
 ### `touch-target-too-small` — P0 (primary action) / P1 (secondary)
-- **Source**: WCAG 2.5.5, Apple HIG, Material guidelines
+- **Source**: WCAG 2.5.5 (AAA), Apple HIG, Material guidelines
 - **Detect**: Interactive element with rendered dimensions < 44×44px on touch surfaces
 - **Why**: Mis-tap rate climbs sharply below 44px.
-- **Fix**: Minimum 44×44px hit area.
+- **Fix**: Minimum 44×44px hit area. Use padding or `::before` pseudo-elements to extend the hit area without changing the visual size.
 
-### `low-contrast-body` — P0
+### `low-contrast-body` (P0)
 - **Source**: WCAG 1.4.3
 - **Detect**: Body text contrast < 4.5:1 against its background
 - **Why**: WCAG AA hard requirement.
-- **Fix**: Increase contrast.
+- **Fix**: Increase contrast. The token system should have a "primary text" value that meets this against every approved background.
 
-### `low-contrast-large` — P1
+### `low-contrast-large` (P1)
 - **Source**: WCAG 1.4.3
 - **Detect**: Large text (≥ 18.66px regular or ≥ 24px bold) contrast < 3:1
 - **Why**: WCAG AA for large text.
 - **Fix**: Increase contrast.
 
-### `heading-hierarchy-broken` — P1
+### `heading-hierarchy-broken` (P1)
 - **Source**: WCAG 1.3.1
-- **Detect**: Heading levels skipped; multiple h1; or a heading used purely for visual sizing
-- **Why**: Screen readers navigate by heading level.
+- **Detect**: Heading levels skipped (e.g. h1 → h3); multiple h1; or a heading used purely for visual sizing
+- **Why**: Screen readers navigate by heading level. Broken hierarchy breaks navigation.
 - **Fix**: Sequential levels. Use CSS for sizing, semantics for hierarchy.
 
 ## Performance tells
 
-### `image-no-dimensions` — P1
+### `image-no-dimensions` (P1)
 - **Source**: Web Vitals (CLS)
-- **Detect**: `<img>` without `width` and `height` attributes
+- **Detect**: `<img>` without `width` and `height` attributes (or aspect-ratio in CSS)
 - **Why**: Causes CLS as the image loads.
 - **Fix**: Set explicit dimensions, or `aspect-ratio: w / h` on the wrapper.
 
-### `barrel-import` — P2
+### `barrel-import` (P2)
 - **Source**: bundle-size best practice
 - **Detect**: `import * as Lib from 'lib'` or `import { ... } from 'large-lib'` where the lib doesn't tree-shake
 - **Why**: Pulls the full library into the bundle.
-- **Fix**: Direct imports.
+- **Fix**: Direct imports: `import specific from 'lib/specific'`.
 
-### `layout-thrash` — P1
+### `layout-thrash` (P1)
 - **Source**: rendering best practice
-- **Detect**: Reading layout properties inside a write loop
+- **Detect**: Reading layout properties (`offsetHeight`, `getBoundingClientRect`, `scrollTop`) inside a write loop
 - **Why**: Forces synchronous layout on every iteration.
-- **Fix**: Read first, then write all changes.
+- **Fix**: Read first (cache), then write all changes.
 
-### `unbounded-blur` — P2
+### `unbounded-blur` (P2)
 - **Source**: rendering best practice
-- **Detect**: `backdrop-filter: blur(40px)` or higher on a 100vw or 100vh element
-- **Why**: Blur is a per-pixel operation.
+- **Detect**: `backdrop-filter: blur(40px)` (or higher) on a 100vw or 100vh element
+- **Why**: Blur is a per-pixel operation; large blur on large surfaces drops frames.
 - **Fix**: Smaller blur radius, smaller surface, or skip the effect.
 
 ## What never to flag
@@ -310,8 +310,8 @@ These come up often but the gate doesn't report them. Each is on a hard-exclusio
 
 The catalog draws from:
 
-- **impeccable** ([cli/engine/detect-antipatterns.mjs](https://github.com/getuslisted/impeccable/blob/main/cli/engine/detect-antipatterns.mjs)) — 27 deterministic rules, the AI slop test, the absolute bans
-- **claude-code-security-review** ([prompts.py](https://github.com/getuslisted/claude-code-security-review/blob/main/claudecode/prompts.py), [hard-exclusion list](https://github.com/getuslisted/claude-code-security-review/blob/main/.claude/commands/security-review.md)) — what counts as a real security finding
-- **ui-ux-pro-max-skill** — industry anti-patterns (per-product-type exclusions in the 161 reasoning rules)
-- **WCAG 2.2** — accessibility baselines
-- **Core Web Vitals** — performance baselines
+- **impeccable** ([cli/engine/detect-antipatterns.mjs](https://github.com/getuslisted/impeccable/blob/main/cli/engine/detect-antipatterns.mjs)), 27 deterministic rules, the AI slop test, the absolute bans
+- **claude-code-security-review** ([prompts.py](https://github.com/getuslisted/claude-code-security-review/blob/main/claudecode/prompts.py), [hard-exclusion list](https://github.com/getuslisted/claude-code-security-review/blob/main/.claude/commands/security-review.md)), what counts as a real security finding
+- **ui-ux-pro-max-skill**, industry anti-patterns (per-product-type exclusions in the 161 reasoning rules)
+- **WCAG 2.2**, accessibility baselines
+- **Core Web Vitals**, performance baselines
