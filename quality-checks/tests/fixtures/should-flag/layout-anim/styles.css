@@ -1,0 +1,16 @@
+.drawer {
+  transition: width 300ms ease-out, opacity 200ms;
+}
+
+.accordion {
+  animation: expand 400ms;
+}
+
+@keyframes expand {
+  from { height: 0; }
+  to { height: 200px; }
+}
+
+.bad {
+  transition: padding 200ms;
+}

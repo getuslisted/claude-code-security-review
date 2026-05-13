@@ -1,0 +1,44 @@
+{
+  "name": "quality-checks",
+  "version": "1.1.0",
+  "released": "2026-05-13",
+  "description": "Nine-phase final-line-of-defense pipeline. Composes security analysis, design rigour, and UI/UX intelligence.",
+  "sources": {
+    "claude-code-security-review": {
+      "repo": "getuslisted/claude-code-security-review",
+      "ref": "main",
+      "uses": ["Phase 1 prompt", "false-positive filter", "confidence thresholds"]
+    },
+    "impeccable": {
+      "repo": "getuslisted/impeccable",
+      "ref": "main",
+      "uses": ["shared design laws", "absolute bans", "register system", "audit dimensions", "harden checks", "polish checklist", "STYLE.md denylist"]
+    },
+    "ui-ux-pro-max-skill": {
+      "repo": "getuslisted/ui-ux-pro-max-skill",
+      "ref": "main",
+      "uses": ["161 industry reasoning rules", "67 styles", "57 font pairings", "stack-specific guidelines"]
+    }
+  },
+  "deterministic_checks": {
+    "ids": [
+      "qc-001", "qc-002", "qc-007", "qc-009",
+      "qc-042", "qc-043",
+      "qc-070", "qc-071", "qc-072",
+      "qc-080", "qc-081"
+    ],
+    "runner": "quality-checks/scripts/check.sh",
+    "tests": "quality-checks/tests/run-tests.sh",
+    "ci": ".github/workflows/quality-checks.yml"
+  },
+  "llm_judgment_phases": {
+    "phases": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    "command": "quality-checks/commands/quality-checks.md",
+    "user_invokable": ".claude/commands/quality-checks.md"
+  },
+  "exit_criteria": {
+    "ship": "Excellent or Good band, Security pass, P0=0, P1<=5",
+    "ship_with_exception": "Acceptable band, Security pass, P0=0, documented exception",
+    "hold": "Poor or Critical band, OR Security fail, OR P0>=1"
+  }
+}
