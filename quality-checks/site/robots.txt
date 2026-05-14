@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://quality-checks.dev/sitemap.xml

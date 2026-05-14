@@ -1,0 +1,40 @@
+# Quality Checks
+
+> A nine-phase final-line-of-defense pipeline for code that ships. Composes security analysis (claude-code-security-review), design rigour (impeccable), and industry UI intelligence (ui-ux-pro-max-skill). The deterministic gate runs 11 regex-detectable rules in CI; the slash command runs LLM judgment on the rest. MIT licensed, free.
+
+## What it does
+
+Quality Checks reads a branch diff and emits one markdown verdict per the rubric. Five scoring dimensions (Anti-Pattern, Design System, Accessibility, Performance, Resilience), total out of 20. Five bands (Excellent, Good, Acceptable, Poor, Critical). Security verdict and deterministic-gate verdict override the band.
+
+The deterministic gate is a 250-line bash script (quality-checks/scripts/check.sh) that catches eleven regex-detectable patterns: side-stripe borders, gradient text, pure black or pure white, layout-property animation, outline: none, div onClick, em dashes, banned diction, throat-clearing openers, dangerouslySetInnerHTML, v-html and Svelte @html. Self-tested against 13 fixtures.
+
+The LLM judgment phases run through the Claude Code slash command /quality-checks. They cover security review (Phase 1), anti-pattern audit (Phase 2 subjective subset), design-system drift (Phase 3), accessibility heuristics (Phase 4), performance audit (Phase 5), resilience review (Phase 6), structural editorial review (Phase 7), and stack-specific idioms (Phase 8).
+
+## Pages
+
+- [Home](/): What it catches, two surfaces, the verdict format, the three sources
+- [Why](/why/): Six observable patterns that get past every reviewer
+- [Pipeline](/pipeline/): All nine phases with inputs, checks, exit criteria
+- [Checks](/checks/): The eleven deterministic rules with code examples and fixes
+- [Blocks](/blocks/): Ten verified UI primitives ready to paste
+- [Install](/install/): Three-step install ceremony, configuration variables, uninstall
+- [Rubric](/rubric/): Scoring dimensions, bands, severity census, sign-off matrix
+- [Security](/security/): Threat model, controls, false-positive exclusions
+
+## Data
+
+- [data.json](/_data/data.json): All site content as structured data.
+
+## Source
+
+- claude-code-security-review: https://github.com/getuslisted/claude-code-security-review
+- impeccable: https://github.com/getuslisted/impeccable
+- ui-ux-pro-max-skill: https://github.com/getuslisted/ui-ux-pro-max-skill
+
+## Use this when
+
+You want to evaluate whether a frontend branch is ready to merge against five dimensions: AI-pattern density, design-system conformance, accessibility, performance, resilience. You want a deterministic gate that runs in CI in under a second. You want a composable system that does not replace your existing security review or design system.
+
+## Do not use this for
+
+Running tests against a deployed application. Penetration testing. Auto-merging or auto-fixing code. Replacing human code review on architectural decisions.
